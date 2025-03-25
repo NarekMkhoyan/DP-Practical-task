@@ -1,4 +1,8 @@
-import { calculateRounds, pickAWinner } from 'src/utils/helper';
+import {
+  calculateRounds,
+  pickAWinner,
+  removeAndReturnRandomElements,
+} from 'src/utils/helper';
 import { IMembersResponseData } from './members-response.interface';
 
 interface ITournament {
@@ -21,7 +25,9 @@ export class Tournament implements ITournament {
 
   public play(): void {
     if (this.currentRound === this.maxRoundCount) {
-      confirm(`And the winner is ${pickAWinner(this.bracket.members).team_name}`);
+      confirm(
+        `And the winner is ${pickAWinner(this.bracket.members).team_name}`
+      );
       this.reset();
     } else {
       this.recursiveChildNodePlay(this.bracket.childNodes, this.bracket);
@@ -66,7 +72,10 @@ export class BracketSection {
   ): this {
     this.setRoundNumber(maxNumberOfLevels);
     if (maxNumberOfLevels === 1) {
-      this.members = members.splice(0, 2);
+      this.members = removeAndReturnRandomElements<IMembersResponseData>(
+        members,
+        2
+      );
     }
     if (maxNumberOfLevels !== 1) {
       this.childNodes = [

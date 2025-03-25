@@ -15,3 +15,12 @@ export function pickAWinner(
   const winner = members[winnerIndex];
   return winner;
 }
+
+export function removeAndReturnRandomElements<T>(array: T[], count: number): T[] {
+  let removedElements = [];
+  for (let i = 0; i < count; i++) {
+      const randomIndex = Math.floor(Math.random() * array.length);
+      removedElements.push(array.splice(randomIndex, 1)[0]);
+  }
+  return removedElements;
+}
